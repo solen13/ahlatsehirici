@@ -158,6 +158,12 @@ const busTimes = ref([
         departureActive: false,
         returnActive: false,
       },
+      {
+        departureTime: '12:14',
+        retunTime: '20:20',
+        departureActive: false,
+        returnActive: false,
+      },
     ],
   },
   {
