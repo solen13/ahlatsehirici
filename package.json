@@ -10,9 +10,11 @@
         "postinstall": "nuxt prepare"
     },
     "dependencies": {
+        "leaflet": "^1.9.4",
+        "leaflet-routing-machine": "^3.2.12",
+        "nuxt": "^3.12.2",
         "postcss-scss": "^4.0.9",
         "sass": "^1.77.4",
-        "nuxt": "^3.12.2",
         "vue": "^3.4.29",
         "vue-router": "^4.3.3"
     },

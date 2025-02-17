@@ -50,6 +50,10 @@
       </div>
     </div>
   </div>
+
+  <ClientOnly>
+    <Map />
+  </ClientOnly>
 </template>
 
 <script setup>
