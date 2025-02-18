@@ -5,7 +5,26 @@ import 'leaflet-routing-machine';
 
 const map = ref(null);
 const userMarker = ref(null);
-const destinationMarker = ref(null);
+const routingControl = ref(null);
+
+const locations = [
+  { name: 'Durak 1', coords: [38.75398517875953, 42.49346438892259] },
+  { name: 'Durak 2', coords: [38.754059704812725, 42.49787916915966] },
+  { name: 'Durak 3', coords: [38.755890157563165, 42.51047359038544] },
+];
+
+// 🔹 Özel ikonları oluştur
+const userIcon = L.icon({
+  iconUrl: '/human.png', // Kullanıcı ikonu
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+const stopIcon = L.icon({
+  iconUrl: '/durak.png',
+  iconSize: [55, 55],
+  iconAnchor: [25, 45],
+});
 
 onMounted(() => {
   if (typeof window !== 'undefined') {
@@ -16,16 +35,15 @@ onMounted(() => {
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map.value);
 
-    // 🎯 Varış noktası (Sabit nokta - örnek olarak belirlenmiş)
-    const destination = [57.6792, 11.949];
+    // 📍 Durakları ekle (Stop işareti)
+    locations.forEach((location) => {
+      const marker = L.marker(location.coords, { icon: stopIcon })
+        .addTo(map.value)
+        .bindPopup(location.name)
+        .on('click', () => updateRoute(location.coords)); // 🔹 Marker'a tıklanınca yeni rota çiz
+    });
 
-    // 📍 Varış noktası işaretleyicisini ekle
-    destinationMarker.value = L.marker(destination)
-      .addTo(map.value)
-      .bindPopup('Varış Noktası')
-      .openPopup();
-
-    // 📌 Kullanıcının konumunu al
+    // 📌 Kullanıcının konumunu al ve en yakın konuma yönlendir
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -34,27 +52,17 @@ onMounted(() => {
             position.coords.longitude,
           ];
 
-          // 👤 Kullanıcının konumunu işaretleyici ile göster
-          userMarker.value = L.marker(userLatLng)
+          // 👤 Kullanıcının konumu (User işareti)
+          userMarker.value = L.marker(userLatLng, { icon: userIcon })
             .addTo(map.value)
             .bindPopup('Mevcut Konumunuz')
             .openPopup();
 
-          // 🌍 Haritanın görünümünü kullanıcıya ayarla
-          map.value.setView(userLatLng, 13);
+          map.value.setView(userLatLng, 16);
 
-          // 🚗 Rota çizme işlemi
-          L.Routing.control({
-            waypoints: [
-              L.latLng(userLatLng), // Kullanıcının konumu
-              L.latLng(destination), // Varış noktası
-            ],
-            routeWhileDragging: true,
-            draggableWaypoints: false, // Kullanıcı rota noktalarını değiştiremez
-            createMarker: function () {
-              return null;
-            }, // Varsayılan işaretleyicileri kaldır
-          }).addTo(map.value);
+          // 🚗 En yakın durağı bul ve rotayı çiz
+          const closestLocation = findClosestLocation(userLatLng);
+          updateRoute(closestLocation.coords);
         },
         (error) => {
           console.error('Konum alınamadı:', error);
@@ -65,8 +73,65 @@ onMounted(() => {
     }
   }
 });
+
+// 🔹 Kullanıcıya en yakın durağı bulma fonksiyonu
+function findClosestLocation(userLatLng) {
+  let minDistance = Infinity;
+  let closest = null;
+
+  locations.forEach((location) => {
+    const distance = getDistance(userLatLng, location.coords);
+    if (distance < minDistance) {
+      minDistance = distance;
+      closest = location;
+    }
+  });
+
+  return closest;
+}
+
+// 🔹 İki nokta arasındaki mesafeyi hesaplama (Haversine Formülü)
+function getDistance(coord1, coord2) {
+  const toRad = (x) => (x * Math.PI) / 180;
+  const R = 6371; // Dünya'nın yarıçapı (km)
+  const dLat = toRad(coord2[0] - coord1[0]);
+  const dLon = toRad(coord2[1] - coord1[1]);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(coord1[0])) *
+      Math.cos(toRad(coord2[0])) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c; // km cinsinden mesafe
+}
+
+// 🚗 **Rota Güncelleme**
+function updateRoute(destination) {
+  if (routingControl.value) {
+    map.value.removeControl(routingControl.value); // Önceki rotayı kaldır
+  }
+
+  routingControl.value = L.Routing.control({
+    waypoints: [
+      L.latLng(userMarker.value.getLatLng()), // Kullanıcı konumu
+      L.latLng(destination), // Yeni varış noktası
+    ],
+    routeWhileDragging: true,
+    draggableWaypoints: false,
+    createMarker: function () {
+      return null;
+    },
+  }).addTo(map.value);
+}
 </script>
 
 <template>
   <div id="map" style="height: 500px"></div>
 </template>
+
+<style>
+.leaflet-routing-alt {
+  display: none !important;
+}
+</style>
