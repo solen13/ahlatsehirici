@@ -48,7 +48,10 @@
             </span>
           </li>
           <li class="flex justify-center">
-            <button class="bg-slate-800 px-4 rounded text-white mx-auto">
+            <button
+              @click="pathBtn(item.id)"
+              class="bg-slate-800 px-4 rounded text-white mx-auto"
+            >
               Güzergahı
             </button>
           </li>
@@ -59,9 +62,11 @@
 </template>
 
 <script setup>
+const emit = defineEmits(['path']);
 const searchQuery = ref('');
 const busTimes = ref([
   {
+    id: '1',
     busName: 'Tunus, toki, hastane',
     time: [
       {
@@ -97,6 +102,7 @@ const busTimes = ref([
     ],
   },
   {
+    id: '2',
     busName: 'Uludere, kamping, hastane',
     time: [
       {
@@ -132,6 +138,7 @@ const busTimes = ref([
     ],
   },
   {
+    id: '3',
     busName: 'Kırklar ,taş ocağı ',
     time: [
       {
@@ -173,6 +180,7 @@ const busTimes = ref([
     ],
   },
   {
+    id: '4',
     busName: 'eyiler, müze, hastane',
     time: [
       {
@@ -249,6 +257,10 @@ function updateBusTimes() {
     });
   });
 }
+
+const pathBtn = (id) => {
+  emit('path', id);
+};
 
 onMounted(() => {
   setInterval(updateBusTimes, 1000);
