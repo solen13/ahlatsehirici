@@ -46,6 +46,41 @@ onMounted(() => {
   }
 });
 
+// function locateUser() {
+//   if ('geolocation' in navigator) {
+//     navigator.geolocation.watchPosition(
+//       (position) => {
+//         userLocation.value = [
+//           position.coords.latitude,
+//           position.coords.longitude,
+//         ];
+
+//         if (userMarker.value) {
+//           userMarker.value.setLatLng(userLocation.value);
+//         } else {
+//           userMarker.value = L.marker(userLocation.value, { icon: userIcon })
+//             .addTo(map.value)
+//             .openPopup();
+//         }
+
+//         map.value.setView(userLocation.value, 14);
+
+//         const closestLocation = findClosestLocation(userLocation.value);
+//         updateRoute(closestLocation.coords);
+//       },
+//       (error) => {
+//         alert('Konum alınamadı: Lütfen konum izinlerini kontrol edin.');
+//         console.error('Konum hatası:', error);
+//       },
+//       { enableHighAccuracy: true }
+//     );
+//   } else {
+//     alert('Tarayıcınız konum özelliğini desteklemiyor.');
+//   }
+// }
+
+let firstUpdate = true;
+
 function locateUser() {
   if ('geolocation' in navigator) {
     navigator.geolocation.watchPosition(
@@ -63,7 +98,13 @@ function locateUser() {
             .openPopup();
         }
 
-        map.value.setView(userLocation.value, 14);
+        // İlk konum alındığında haritayı merkeze al
+        if (firstUpdate) {
+          map.value.setView(userLocation.value, 14);
+          firstUpdate = false;
+        } else {
+          map.value.flyTo(userLocation.value, 14, { duration: 1.5 });
+        }
 
         const closestLocation = findClosestLocation(userLocation.value);
         updateRoute(closestLocation.coords);
@@ -78,7 +119,6 @@ function locateUser() {
     alert('Tarayıcınız konum özelliğini desteklemiyor.');
   }
 }
-
 function findClosestLocation(userLatLng) {
   let minDistance = Infinity;
   let closest = null;
