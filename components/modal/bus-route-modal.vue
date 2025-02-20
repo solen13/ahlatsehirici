@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen w-full bg-slate-800 fixed top-0 z-50">
-    <div class="flex justify-between items-center p-1">
-      <h2 class="text-white text-bold">Dolmuş Güzergahı</h2>
+    <div class="flex justify-between container mx-auto items-center p-1">
+      <h2 class="text-white font-bold text-xl">Dolmuş Güzergahı</h2>
       <button
         class="text-bold text-2xl text-white bg-red-600 py-2 px-4 rounded-full"
         @click="close"

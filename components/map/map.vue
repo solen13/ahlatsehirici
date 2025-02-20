@@ -83,42 +83,51 @@ let firstUpdate = true;
 
 function locateUser() {
   if ('geolocation' in navigator) {
-    navigator.geolocation.watchPosition(
-      (position) => {
-        userLocation.value = [
-          position.coords.latitude,
-          position.coords.longitude,
-        ];
+    function updateLocation() {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          userLocation.value = [
+            position.coords.latitude,
+            position.coords.longitude,
+          ];
 
-        if (userMarker.value) {
-          userMarker.value.setLatLng(userLocation.value);
-        } else {
-          userMarker.value = L.marker(userLocation.value, { icon: userIcon })
-            .addTo(map.value)
-            .openPopup();
-        }
+          if (userMarker.value) {
+            userMarker.value.setLatLng(userLocation.value);
+          } else {
+            userMarker.value = L.marker(userLocation.value, { icon: userIcon })
+              .addTo(map.value)
+              .openPopup();
+          }
 
-        // İlk konum alındığında haritayı merkeze al
-        if (firstUpdate) {
-          map.value.setView(userLocation.value, 14);
-          firstUpdate = false;
-        } else {
-          map.value.flyTo(userLocation.value, 14, { duration: 1.5 });
-        }
+          // İlk konum alındığında haritayı merkeze al
+          if (firstUpdate) {
+            map.value.setView(userLocation.value, 14);
+            firstUpdate = false;
+          } else {
+            map.value.flyTo(userLocation.value, 14, { duration: 10.5 });
+          }
 
-        const closestLocation = findClosestLocation(userLocation.value);
-        updateRoute(closestLocation.coords);
-      },
-      (error) => {
-        alert('Konum alınamadı: Lütfen konum izinlerini kontrol edin.');
-        console.error('Konum hatası:', error);
-      },
-      { enableHighAccuracy: true }
-    );
+          const closestLocation = findClosestLocation(userLocation.value);
+          updateRoute(closestLocation.coords);
+        },
+        (error) => {
+          alert('Konum alınamadı: Lütfen konum izinlerini kontrol edin.');
+          console.error('Konum hatası:', error);
+        },
+        { enableHighAccuracy: true }
+      );
+    }
+
+    // İlk konumu hemen al
+    updateLocation();
+
+    // Sonraki konumları 2 dakikada bir güncelle
+    setInterval(updateLocation, 120000);
   } else {
     alert('Tarayıcınız konum özelliğini desteklemiyor.');
   }
 }
+
 function findClosestLocation(userLatLng) {
   let minDistance = Infinity;
   let closest = null;
