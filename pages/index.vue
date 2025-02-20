@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <nav-bar />
+    <InstallPWA />
     <bus-list class="mt-10" @path="handlePath"></bus-list>
     <ClientOnly>
       <bus-route-modal
