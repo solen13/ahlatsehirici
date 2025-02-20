@@ -1,18 +1,18 @@
 <template>
   <div class="h-screen w-full bg-slate-800 fixed top-0 z-50">
     <div class="flex justify-between container mx-auto items-center p-1">
-      <h2 class="text-white font-bold text-xl">Dolmuş Güzergahı</h2>
+      <h2 class="text-white font-bold text-xl">{{ name }} Dolmuş Güzergahı</h2>
       <button
-        class="text-bold text-2xl text-white bg-red-600 py-2 px-4 rounded-full"
+        class="text-bold text-2xl text-white bg-red-600 rounded-full py-2 px-3"
         @click="close"
       >
-        X
+        <Icon name="material-symbols:close-rounded" size="26" class="mt-2" />
       </button>
     </div>
 
     <div class="flex justify-center p-2">
       <button
-        class="bg-green-500 text-white py-2 px-4 rounded"
+        class="bg-green-500 flex items-center justify-between text-white py-2 px-4 rounded"
         @click="showLocation"
       >
         Konumunu Bul
@@ -35,6 +35,10 @@ const props = defineProps({
     type: Number,
     default: null,
   },
+  name: {
+    type: String,
+    default: '',
+  },
 });
 const emit = defineEmits(['path']);
 const close = () => {
@@ -48,7 +52,6 @@ const busRoute = computed(() => busCordinateList[props.id]);
 console.log(busRoute.value.cordinateList);
 
 onMounted(() => {
-  console.log(busRoute);
   if (typeof window !== 'undefined') {
     map.value = L.map('map').setView(
       [38.755890157563165, 42.51047359038544],

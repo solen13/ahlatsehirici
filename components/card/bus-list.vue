@@ -47,12 +47,17 @@
               {{ times.retunTime }}
             </span>
           </li>
-          <li class="flex justify-center">
+          <li class="flex justify-center py-2">
             <button
-              @click="pathBtn(item.id)"
-              class="bg-slate-800 px-4 rounded text-white mx-auto"
+              @click="pathBtn(item.id, item.busName)"
+              class="bg-slate-600 px-4 shadow-xl rounded text-white mx-auto flex justify-between items-center"
             >
-              Güzergahı
+              <span>Güzergah</span>
+              <Icon
+                class="ml-3"
+                name="material-symbols-light:map-search-outline"
+                size="24"
+              />
             </button>
           </li>
         </ul>
@@ -258,8 +263,8 @@ function updateBusTimes() {
   });
 }
 
-const pathBtn = (id) => {
-  emit('path', id);
+const pathBtn = (id, name) => {
+  emit('path', id, name);
 };
 
 onMounted(() => {

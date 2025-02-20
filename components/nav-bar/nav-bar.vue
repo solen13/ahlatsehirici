@@ -7,7 +7,7 @@
         alt=""
       />
       <h1 class="font-bold text-2xl text-center">
-        Ahlat Beldiyesi Dolmuş Saatleri
+        Ahlat Belediyesi Dolmuş Saatleri
       </h1>
       <img
         class="w-20 h-20"

@@ -8,6 +8,7 @@
         v-if="isModalID != null"
         @path="handlePath"
         :id="isModalID"
+        :name="modalName"
       />
     </ClientOnly>
 
@@ -18,7 +19,9 @@
 </template>
 <script setup>
 const isModalID = ref(null);
-const handlePath = (event) => {
+const modalName = ref(null);
+const handlePath = (event, name) => {
+  modalName.value = name;
   isModalID.value = event;
 };
 </script>

@@ -46,39 +46,6 @@ onMounted(() => {
   }
 });
 
-// function locateUser() {
-//   if ('geolocation' in navigator) {
-//     navigator.geolocation.watchPosition(
-//       (position) => {
-//         userLocation.value = [
-//           position.coords.latitude,
-//           position.coords.longitude,
-//         ];
-
-//         if (userMarker.value) {
-//           userMarker.value.setLatLng(userLocation.value);
-//         } else {
-//           userMarker.value = L.marker(userLocation.value, { icon: userIcon })
-//             .addTo(map.value)
-//             .openPopup();
-//         }
-
-//         map.value.setView(userLocation.value, 14);
-
-//         const closestLocation = findClosestLocation(userLocation.value);
-//         updateRoute(closestLocation.coords);
-//       },
-//       (error) => {
-//         alert('Konum alınamadı: Lütfen konum izinlerini kontrol edin.');
-//         console.error('Konum hatası:', error);
-//       },
-//       { enableHighAccuracy: true }
-//     );
-//   } else {
-//     alert('Tarayıcınız konum özelliğini desteklemiyor.');
-//   }
-// }
-
 let firstUpdate = true;
 
 function locateUser() {
@@ -180,7 +147,7 @@ function updateRoute(destination) {
     <div class="flex justify-start xs:justify-center">
       <button
         @click="locateUser"
-        class="bg-green-500 text-white rounded px-6 py-1 my-6 font-bold"
+        class="bg-green-500 text-white flex items-center justify-between rounded px-6 py-1 my-6 font-bold"
       >
         Konumunu Bul
         <Icon name="system-uicons:location" class="ml-2" size="26" />
