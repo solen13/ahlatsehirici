@@ -15,7 +15,8 @@
         class="bg-green-500 text-white py-2 px-4 rounded"
         @click="showLocation"
       >
-        Konumumu Bul
+        Konumunu Bul
+        <Icon name="system-uicons:location" class="ml-2" size="26" />
       </button>
     </div>
 

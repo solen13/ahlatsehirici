@@ -177,12 +177,15 @@ function updateRoute(destination) {
     <h2 class="font-bold text-center text-xl py-2 bg-orange-50">
       En Yakın Durağı Bul
     </h2>
-    <button
-      @click="locateUser"
-      class="bg-blue-400 text-white rounded px-6 py-1 my-6 font-bold"
-    >
-      Konumunu Bul
-    </button>
+    <div class="flex justify-start xs:justify-center">
+      <button
+        @click="locateUser"
+        class="bg-green-500 text-white rounded px-6 py-1 my-6 font-bold"
+      >
+        Konumunu Bul
+        <Icon name="system-uicons:location" class="ml-2" size="26" />
+      </button>
+    </div>
     <div id="map" class="z-10" style="height: 70vh"></div>
   </div>
 </template>
