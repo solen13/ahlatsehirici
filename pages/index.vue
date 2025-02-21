@@ -24,4 +24,18 @@ const handlePath = (event, name) => {
   modalName.value = name;
   isModalID.value = event;
 };
+useSeoMeta({
+  ogTitle: () => 'Ahlat Belediyesi Şehiriçi Dolmuş Saatleri',
+  title: () => 'Ahlat Belediyesi Şehiriçi Dolmuş Saatleri',
+  ogDescription: () =>
+    'Ahlat Belediyesi şehiriçi dolmuş saatleri ve dolmuş durak konum bilgilerine ulaşabilirsiniz',
+  description: () =>
+    'Ahlat Belediyesi şehiriçi dolmuş saatleri ve dolmuş durak konum bilgilerine ulaşabilirsiniz',
+  ogImageUrl: () => '/ahlatbelediyelogo.png',
+  twitterCard: () => 'summary_large_image',
+  twitterTitle: () => 'Ahlat Belediyesi Şehiriçi Dolmuş Saatleri',
+  twitterDescription: () =>
+    'Ahlat Belediyesi şehiriçi dolmuş saatleri ve dolmuş durak konum bilgilerine ulaşabilirsiniz',
+  twitterImage: () => '/ahlatbelediyelogo.png',
+});
 </script>
