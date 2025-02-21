@@ -33,6 +33,14 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'tr',
       },
+
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: '/logo.ico',
+        },
+      ],
     },
   },
 });

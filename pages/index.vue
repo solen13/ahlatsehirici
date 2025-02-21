@@ -31,11 +31,12 @@ useSeoMeta({
     'Ahlat Belediyesi şehiriçi dolmuş saatleri ve dolmuş durak konum bilgilerine ulaşabilirsiniz',
   description: () =>
     'Ahlat Belediyesi şehiriçi dolmuş saatleri ve dolmuş durak konum bilgilerine ulaşabilirsiniz',
-  ogImageUrl: () => '/ahlatbelediyelogo.png',
+  ogImageUrl: () => 'https://ahlat-sehirici.netlify.app/ahlatbelediyelogo.png',
   twitterCard: () => 'summary_large_image',
   twitterTitle: () => 'Ahlat Belediyesi Şehiriçi Dolmuş Saatleri',
   twitterDescription: () =>
     'Ahlat Belediyesi şehiriçi dolmuş saatleri ve dolmuş durak konum bilgilerine ulaşabilirsiniz',
-  twitterImage: () => '/ahlatbelediyelogo.png',
+  twitterImage: () =>
+    'https://ahlat-sehirici.netlify.app/ahlatbelediyelogo.png',
 });
 </script>
