@@ -3,7 +3,7 @@
     <input
       v-model="searchQuery"
       type="text"
-      placeholder="Şehir içi ismi ile arayın..."
+      placeholder="Dolmuş Arayın..."
       class="w-full p-2 shadow-md rounded mb-4 mt-3"
     />
     <div class="w-full p-2 rounded mb-4 text-center text-2xl font-black">
@@ -75,32 +75,32 @@ const busTimes = ref([
     busName: 'Tunus, toki, hastane',
     time: [
       {
-        departureTime: '19:28',
-        retunTime: '07:40',
+        departureTime: '07:28',
+        retunTime: '08:40',
         departureActive: false,
         returnActive: false,
       },
       {
-        departureTime: '20:10',
-        retunTime: '02:03',
+        departureTime: '09:10',
+        retunTime: '09:40',
         departureActive: false,
         returnActive: false,
       },
       {
         departureTime: '10:16',
-        retunTime: '19:34',
-        departureActive: false,
-        returnActive: false,
-      },
-      {
-        departureTime: '11:14',
-        retunTime: '11:40',
+        retunTime: '11:34',
         departureActive: false,
         returnActive: false,
       },
       {
         departureTime: '12:14',
-        retunTime: '19:40',
+        retunTime: '12:40',
+        departureActive: false,
+        returnActive: false,
+      },
+      {
+        departureTime: '13:14',
+        retunTime: '13:40',
         departureActive: false,
         returnActive: false,
       },
@@ -176,12 +176,6 @@ const busTimes = ref([
         departureActive: false,
         returnActive: false,
       },
-      {
-        departureTime: '22:18',
-        retunTime: '23:26',
-        departureActive: false,
-        returnActive: false,
-      },
     ],
   },
   {
@@ -189,7 +183,7 @@ const busTimes = ref([
     busName: 'eyiler, müze, hastane',
     time: [
       {
-        departureTime: '20:20',
+        departureTime: '14:02',
         retunTime: '07:40',
         departureActive: false,
         returnActive: false,
@@ -209,12 +203,6 @@ const busTimes = ref([
       {
         departureTime: '11:14',
         retunTime: '11:40',
-        departureActive: false,
-        returnActive: false,
-      },
-      {
-        departureTime: '12:14',
-        retunTime: '19:40',
         departureActive: false,
         returnActive: false,
       },
